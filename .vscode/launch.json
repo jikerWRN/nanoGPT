@@ -1,0 +1,27 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "nanoGPT: Train Shakespeare Char (H200)",
+            "type": "debugpy",
+            "request": "launch",
+            "python": "/home/wangyufei/anaconda3/envs/torch/bin/python",
+            "program": "${workspaceFolder}/train.py",
+            "cwd": "${workspaceFolder}",
+            "console": "integratedTerminal",
+            "justMyCode": false,
+            "env": {
+                "CUDA_VISIBLE_DEVICES": "0"
+            },
+            "args": [
+                "config/train_shakespeare_char.py",
+                "--device=cuda",
+                "--dtype=bfloat16",
+                "--compile=False",
+                "--batch_size=256",
+                "--max_iters=5000",
+                "--eval_interval=250"
+            ]
+        }
+    ]
+}
