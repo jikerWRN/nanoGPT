@@ -1,0 +1,12 @@
+import tiktoken
+
+enc = tiktoken.get_encoding("o200k_base")
+
+text = "你好，tiktoken 是一个 tokenizer。"
+
+tokens = enc.encode(text)
+print(tokens)
+print(len(tokens))
+
+decoded_text = enc.decode(tokens)
+print(decoded_text)
