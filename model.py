@@ -237,10 +237,10 @@ class GPT(nn.Module):
 
         # Download from ModelScope, then let transformers load the local checkpoint.
         modelscope_model_ids = {
-            'gpt2': 'AI-ModelScope/gpt2',
-            'gpt2-medium': 'AI-ModelScope/gpt2-medium',
-            'gpt2-large': 'AI-ModelScope/gpt2-large',
-            'gpt2-xl': 'AI-ModelScope/gpt2-xl',
+            'gpt2': 'openai-community/gpt2',
+            'gpt2-medium': 'openai-community/gpt2-medium',
+            'gpt2-large': 'openai-community/gpt2-large',
+            'gpt2-xl': 'openai-community/gpt2-xl',
         }
         model_dir = snapshot_download(modelscope_model_ids[model_type])
         model_hf = GPT2LMHeadModel.from_pretrained(model_dir, local_files_only=True)
