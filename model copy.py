@@ -209,9 +209,8 @@ class GPT(nn.Module):
         override_args = override_args or {} # default to empty dict
         # only dropout can be overridden see more notes below
         assert all(k == 'dropout' for k in override_args)
-        from modelscope import snapshot_download
         from transformers import GPT2LMHeadModel
-        print("loading weights from ModelScope pretrained gpt: %s" % model_type)
+        print("loading weights from pretrained gpt: %s" % model_type)
 
         # n_layer, n_head and n_embd are determined from model_type
         config_args = {
@@ -235,15 +234,8 @@ class GPT(nn.Module):
         sd_keys = sd.keys()
         sd_keys = [k for k in sd_keys if not k.endswith('.attn.bias')] # discard this mask / buffer, not a param
 
-        # Download from ModelScope, then let transformers load the local checkpoint.
-        modelscope_model_ids = {
-            'gpt2': 'AI-ModelScope/gpt2',
-            'gpt2-medium': 'AI-ModelScope/gpt2-medium',
-            'gpt2-large': 'AI-ModelScope/gpt2-large',
-            'gpt2-xl': 'AI-ModelScope/gpt2-xl',
-        }
-        model_dir = snapshot_download(modelscope_model_ids[model_type])
-        model_hf = GPT2LMHeadModel.from_pretrained(model_dir, local_files_only=True)
+        # init a huggingface/transformers model
+        model_hf = GPT2LMHeadModel.from_pretrained(model_type)
         sd_hf = model_hf.state_dict()
 
         # copy while ensuring all of the parameters are aligned and match in names and shapes
